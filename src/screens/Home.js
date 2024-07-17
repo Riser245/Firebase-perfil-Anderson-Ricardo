@@ -1,9 +1,9 @@
 // Importación de bibliotecas y componentes necesarios
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import { database } from '../config/firebase'; // Importa la configuración de la base de datos de Firebase
+import { database, auth } from '../config/firebase'; // Importa la configuración de la base de datos de Firebase
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'; // Importa funciones de Firestore para consultas en tiempo real
-import CardProductos from '../components/CardProductos'; // Importa el componente de tarjeta de producto
+import CardProductos from '../components/cardProducto'; // Importa el componente de tarjeta de producto
 
 // Definición del componente principal Home
 const Home = ({ navigation }) => {
@@ -14,7 +14,7 @@ const Home = ({ navigation }) => {
     useEffect(() => {
         // Define una consulta a la colección 'productos' en Firestore, ordenada por el campo 'creado' en orden descendente
         const q = query(collection(database, 'productos'), orderBy('creado', 'desc'));
-        
+
         // Escucha cambios en la consulta de Firestore en tiempo real
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const docs = [];
@@ -31,9 +31,20 @@ const Home = ({ navigation }) => {
     }, []);
 
     // Función para navegar a la pantalla 'Add'
-    const goToAdd = () => { 
+    const goToAdd = () => {
         navigation.navigate('Add');
     }
+
+    const handleLogout = async () => {
+        try {
+            await auth.signOut(); // Función de Firebase para cerrar sesión
+            // Navegar a la pantalla de inicio de sesión después de cerrar sesión
+            navigation.navigate('Login'); // Ajusta el nombre de la pantalla de inicio de sesión
+        } catch (error) {
+            console.error('Error al cerrar sesión:', error);
+            // Puedes manejar el error aquí si lo deseas
+        }
+    };
 
     // Función que renderiza cada item de la lista
     const renderItem = ({ item }) => (
@@ -54,14 +65,14 @@ const Home = ({ navigation }) => {
             {/* Muestra la lista de productos si hay elementos, de lo contrario muestra un mensaje */}
             {
                 productos.length !== 0 ?
-                <FlatList
-                    data={productos}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
-                    contentContainerStyle={styles.list}
-                />
-                : 
-                <Text style={styles.Subtitle}>No hay productos disponibles</Text>
+                    <FlatList
+                        data={productos}
+                        renderItem={renderItem}
+                        keyExtractor={(item) => item.id}
+                        contentContainerStyle={styles.list}
+                    />
+                    :
+                    <Text style={styles.Subtitle}>No hay productos disponibles</Text>
             }
 
             {/* Botón para navegar a la pantalla de agregar productos */}
@@ -69,6 +80,12 @@ const Home = ({ navigation }) => {
                 style={styles.Button}
                 onPress={goToAdd}>
                 <Text style={styles.ButtonText}>Agregar Producto</Text>
+            </TouchableOpacity>
+            {/* Botón para regresar al login que simula cerrar sesión */}
+            <TouchableOpacity
+                style={styles.Button}
+                onPress={handleLogout}>
+                <Text style={styles.ButtonText}>Cerrar sesión</Text>
             </TouchableOpacity>
         </View>
     );
@@ -97,7 +114,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         marginBottom: 10,
-        color:'#ff9800'
+        color: '#ff9800'
     },
     Button: {
         backgroundColor: '#0288d1',

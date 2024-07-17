@@ -7,12 +7,10 @@ import {
   Dimensions,
   ScrollView,
   Image,
+  TextInput
 } from "react-native";
 import {
-  TextInput,
-  Button,
-  PaperProvider,
-  Card,
+  Button
 } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign, Entypo } from "@expo/vector-icons";
@@ -56,61 +54,51 @@ const LoginScreen = () => {
   }, [navigation]);
 
   return (
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <View style={styles.container}>
-          {/* Agregar la imagen del logo encima del contenedor del formulario */}
-          <Card style={styles.profileCard}>
-            <Card.Content>
-            <Image source={require('../img/login.png')} style={styles.logo} />
-              <Text style={styles.title}>Bienvenido </Text>
-              <View style={styles.inputContainer}>
-                <View style={styles.infoRow}>
-                  <Text style={styles.label}>Correo electrónico:</Text>
-                  <View style={styles.rowContent}>
-                    <AntDesign name="mail" size={24} />
-                    <TextInput
-                      style={styles.infoText}
-                      value={correo}
-                      onChangeText={setCorreo}
-                      keyboardType="email-address"
-                    />
-                  </View>
-                </View>
-              </View>
-              <View style={styles.inputContainer}>
-                <View style={styles.infoRow}>
-                  <Text style={styles.label}>Clave del cliente:</Text>
-                  <View style={styles.rowContent}>
-                    <Entypo name="lock" size={24} />
-                    <TextInput
-                      style={styles.infoText}
-                      value={clave}
-                      onChangeText={setClave}
-                      secureTextEntry={true}
-                    />
-                  </View>
-                </View>
-              </View>
-              {error ? <Text style={styles.errorText}>{error}</Text> : null}
-              <Button
-                style={styles.button}
-                mode="contained"
-                onPress={handleLogin}
-              >
-                Iniciar Sesión
-              </Button>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Registro")}
-              >
-                <Text style={styles.loginText}>
-                  ¿No tienes cuenta? Registrate aquí
-                </Text>
-              </TouchableOpacity>
-            </Card.Content>
-          </Card>
+    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <View style={styles.container}>
+        <Image source={require('../img/login.png')} style={styles.logo} />
+        <Text style={styles.title}>Bienvenido </Text>
+        <View style={styles.inputContainer}>
+            <View style={styles.rowContent}>
+              <TextInput
+              style={styles.correoInput}
+              value={correo}
+              onChangeText={setCorreo}
+                placeholder="Correo electrónico:"
+                placeholderTextColor={"#000"}
+                keyboardType="email-address" />
+            </View>
         </View>
-      </ScrollView>
-    
+        <View style={styles.inputContainer}>
+            <View style={styles.rowContent}>
+              <TextInput
+                style={styles.correoInput}
+                value={clave}
+                onChangeText={setClave}
+                placeholder="Clave:"
+                placeholderTextColor={"#000"}
+                secureTextEntry={true}
+              />
+            </View>
+        </View>
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        <Button
+          style={styles.button}
+          mode="contained"
+          onPress={handleLogin}
+        >
+          Iniciar Sesión
+        </Button>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Registro")}
+        >
+          <Text style={styles.loginText}>
+            ¿No tienes cuenta? Registrate aquí
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
+
   );
 };
 
@@ -132,14 +120,15 @@ const styles = StyleSheet.create({
     marginTop: 1,
     alignItems: "center",
     marginBottom: 10,
-    width: 200,
-    height: 200,
-    marginLeft:60,
-    alignItems:'center',
+    width: 400,
+    height:200,
+    marginLeft: 60,
+    alignItems: 'center',
   },
   title: {
     fontSize: 30,
     marginBottom: 20,
+    marginRight:200
   },
   profileCard: {
     width: "100%",
@@ -162,7 +151,6 @@ const styles = StyleSheet.create({
     padding: 12,
     margin: 2,
     borderRadius: 10,
-    backgroundColor: "white",
     width: "100%",
     elevation: 2,
   },
@@ -170,13 +158,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  infoText: {
-    marginLeft: 10,
-    fontSize: 16,
-    backgroundColor: "transparent",
-    height: 40,
-    borderWidth: 0,
-    flex: 1,
+  correoInput: {
+        borderRadius: 10,
+        width: "100%",
+        height: 43,
+        paddingHorizontal: 10,
+        color: "black",
+        marginBottom: 10,
+        marginTop: 10,
+        borderColor: "black",
+        borderWidth: 2,
+        backgroundColor:'white'
   },
   pickerText: {
     fontSize: 16,
@@ -198,7 +190,7 @@ const styles = StyleSheet.create({
   loginText: {
     marginTop: 20,
     color: "black",
-    textAlign:'center'
+    textAlign: 'center'
 
   },
   errorText: {

@@ -57,58 +57,48 @@ const SignUp = () => {
     return unsubscribe;
   }, [navigation]);
   return (
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <View style={styles.container}>
-          {/* Agregar la imagen del logo encima del contenedor del formulario */}
-          <Card style={styles.profileCard}>
-            <Card.Content>
-              <Text style={styles.title}>Registrarse </Text>
-              <View style={styles.inputContainer}>
-                <View style={styles.infoRow}>
-                  <Text style={styles.label}>Correo electrónico:</Text>
-                  <View style={styles.rowContent}>
-                    <AntDesign name="mail" size={24} />
-                    <TextInput
-                      style={styles.infoText}
-                      value={correo}
-                      onChangeText={setCorreo}
-                      keyboardType="email-address"
-                    />
-                  </View>
-                </View>
-              </View>
-              <View style={styles.inputContainer}>
-                <View style={styles.infoRow}>
-                  <Text style={styles.label}>Clave del cliente:</Text>
-                  <View style={styles.rowContent}>
-                    <Entypo name="lock" size={24} />
-                    <TextInput
-                      style={styles.infoText}
-                      value={clave}
-                      onChangeText={setClave}
-                      secureTextEntry={true}
-                    />
-                  </View>
-                </View>
-              </View>
-              <Button
-                style={styles.button}
-                mode="contained"
-                onPress={handleRegister}
-              >
-                Registrarse
-              </Button>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Login")} // Ajusta el nombre de la pantalla de inicio de sesión
-              >
-                <Text style={styles.loginText}>
-                  ¿Ya tienes cuenta? Inicia sesión aquí
-                </Text>
-              </TouchableOpacity>
-            </Card.Content>
-          </Card>
+    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Registrarse </Text>
+        <Image source={require('../img/registro.png')} style={styles.logo} />
+        <View style={styles.inputContainer}>
+            <View style={styles.rowContent}>
+              <TextInput
+                style={styles.Inputs}
+                value={correo}
+                onChangeText={setCorreo}
+                placeholder="Correo electrónico:"
+                placeholderTextColor={"#000"}
+                keyboardType="email-address" />
+          </View>
         </View>
-      </ScrollView>
+        <View style={styles.inputContainer}>
+            <View style={styles.rowContent}>
+              <TextInput
+                style={styles.Inputs}
+                value={clave}
+                onChangeText={setClave}
+                placeholder="Correo electrónico:"
+                placeholderTextColor={"#000"}
+                keyboardType="email-address" />
+          </View>
+        </View>
+        <Button
+          style={styles.button}
+          mode="contained"
+          onPress={handleRegister}
+        >
+          Registrarse
+        </Button>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Login")} // Ajusta el nombre de la pantalla de inicio de sesión
+        >
+          <Text style={styles.loginText}>
+            ¿Ya tienes cuenta? Inicia sesión aquí
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -127,11 +117,13 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
   logo: {
-    width: 150, // Ajusta el ancho según sea necesario
-    height: 150, // Ajusta la altura según sea necesario
-    resizeMode: 'contain', // Ajusta la forma en que la imagen se ajusta a su contenedor
-    marginBottom: 20, // Espacio opcional después de la imagen
-    borderRadius: 100,
+    marginTop: 1,
+    alignItems: "center",
+    marginBottom: 1,
+    width: 250,
+    height:200,
+    marginLeft: 10,
+    alignItems: 'center',
   },
   profileCard: {
     width: "100%",
@@ -154,25 +146,21 @@ const styles = StyleSheet.create({
     color: "gray",
     marginBottom: 5,
   },
-  infoRow: {
-    padding: 12,
-    margin: 2,
-    borderRadius: 10,
-    backgroundColor: "white",
-    width: "100%",
-    elevation: 2,
-  },
   rowContent: {
     flexDirection: "row",
     alignItems: "center",
   },
-  infoText: {
-    marginLeft: 10,
-    fontSize: 16,
-    backgroundColor: "transparent",
-    height: 40,
-    borderWidth: 0,
-    flex: 1,
+  Inputs: {
+    borderRadius: 10,
+    width: "100%",
+    height: 43,
+    paddingHorizontal: 10,
+    color: "black",
+    marginBottom: 10,
+    marginTop: 10,
+    borderColor: "black",
+    borderWidth: 2,
+    backgroundColor:'white'
   },
   pickerText: {
     fontSize: 16,
@@ -194,7 +182,7 @@ const styles = StyleSheet.create({
   loginText: {
     marginTop: 20,
     color: "black",
-    textAlign:'center'
+    textAlign: 'center'
   },
   avatarContainer: {
     alignItems: "center",

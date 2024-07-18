@@ -16,7 +16,7 @@ import {
 } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign, Entypo } from "@expo/vector-icons";
-import { authentication } from '../config/firebase'; // Ajusta el path según tu estructura de proyecto
+import { auth } from '../config/firebase'; // Ajusta el path según tu estructura de proyecto
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 // Constante para manejar el alto de la pantalla
@@ -33,7 +33,7 @@ const SignUp = () => {
   // Método para manejar el registro de usuarios
   const handleRegister = async () => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(authentication, correo, clave);
+      const userCredential = await createUserWithEmailAndPassword(auth, correo, clave);
       const user = userCredential.user;
       console.log("User registered: ", user);
       // Puedes redirigir al usuario a otra pantalla después del registro
@@ -78,7 +78,7 @@ const SignUp = () => {
                 style={styles.Inputs}
                 value={clave}
                 onChangeText={setClave}
-                placeholder="Correo electrónico:"
+                placeholder="Clave:"
                 placeholderTextColor={"#000"}
                 keyboardType="email-address" />
           </View>
